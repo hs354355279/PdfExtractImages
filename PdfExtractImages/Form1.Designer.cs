@@ -34,16 +34,17 @@
             button3 = new Button();
             label1 = new Label();
             listBox1 = new ListBox();
+            button4 = new Button();
             SuspendLayout();
             // 
             // button1
             // 
             button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button1.Location = new Point(713, 12);
+            button1.Location = new Point(584, 12);
             button1.Name = "button1";
-            button1.Size = new Size(75, 49);
+            button1.Size = new Size(92, 49);
             button1.TabIndex = 0;
-            button1.Text = "提取图片";
+            button1.Text = "页面转图片";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
@@ -94,11 +95,23 @@
             listBox1.Size = new Size(774, 361);
             listBox1.TabIndex = 6;
             // 
+            // button4
+            // 
+            button4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button4.Location = new Point(696, 12);
+            button4.Name = "button4";
+            button4.Size = new Size(92, 49);
+            button4.TabIndex = 7;
+            button4.Text = "提取嵌入图片";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(button4);
             Controls.Add(listBox1);
             Controls.Add(label1);
             Controls.Add(button3);
@@ -119,5 +132,6 @@
         private Button button3;
         private Label label1;
         private ListBox listBox1;
+        private Button button4;
     }
 }

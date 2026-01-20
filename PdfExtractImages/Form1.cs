@@ -52,10 +52,10 @@ namespace PdfExtractImages
         private async void button1_Click(object sender, EventArgs e)
         {
             button1.Enabled = false;
-
+            button2.Enabled = false;
             string FileName = Path.GetFileNameWithoutExtension(FilePath);
 
-            PdfImageExtractorService pdfImageExtractorService = new PdfImageExtractorService(FilePath);
+            PdfPageToImageService pdfImageExtractorService = new PdfPageToImageService(FilePath);
 
             int ImgCount = await pdfImageExtractorService.GetPdfPageCount();
 
@@ -82,7 +82,7 @@ namespace PdfExtractImages
                         listBox1.TopIndex = listBox1.Items.Count - 1;
                         Index++;
                     });
-                   
+
                 }
             });
 
@@ -90,6 +90,34 @@ namespace PdfExtractImages
             listBox1.TopIndex = listBox1.Items.Count - 1;
 
             button1.Enabled = true;
+            button2.Enabled = true;
+        }
+
+        private async void button4_Click(object sender, EventArgs e)
+        {
+            button1.Enabled = false;
+            button2.Enabled = false;
+            PdfExtractImageService pdfExtractImageService = new PdfExtractImageService(FilePath, SaveFilePath);
+
+
+            await Task.Run(async () =>
+            {
+
+                foreach (var item in pdfExtractImageService.ExtractFirstImagePerPage())
+                {
+                    this.BeginInvoke(() =>
+                    {
+                        listBox1.Items.Add($"处理完成第{item}页");
+                        listBox1.TopIndex = listBox1.Items.Count - 1;
+                    });
+
+                }
+            });
+            listBox1.Items.Add("处理完成");
+            listBox1.TopIndex = listBox1.Items.Count - 1;
+
+            button1.Enabled = true;
+            button2.Enabled = true;
         }
     }
 }

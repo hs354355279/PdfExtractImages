@@ -8,10 +8,10 @@ using System.Drawing.Imaging;
 
 namespace PdfExtractImages.Services
 {
-    internal class PdfImageExtractorService
+    internal class PdfPageToImageService
     {
         public string FilePath { get; set; }
-        public PdfImageExtractorService(string FilePath_)
+        public PdfPageToImageService(string FilePath_)
         {
 
             FilePath = FilePath_;
