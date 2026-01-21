@@ -17,6 +17,8 @@ namespace PdfExtractImages.Services
             FilePath = FilePath_;
 
         }
+
+    
         /// <summary>
         /// 获取图片数量（页面数量）
         /// </summary>
@@ -52,7 +54,7 @@ namespace PdfExtractImages.Services
                 Marshal.Copy(rawImageData, 0, bmpData.Scan0, rawImageData.Length);
                 tempBmp.UnlockBits(bmpData);
 
- 
+
                 using var finalBmp = new Bitmap(W, H, PixelFormat.Format24bppRgb);
                 using (var g = Graphics.FromImage(finalBmp))
                 {

@@ -19,14 +19,14 @@ namespace PdfExtractImages.Services
 
         public IEnumerable<int> ExtractFirstImagePerPage()
         {
- 
-            string FileName= System.IO.Path.GetFileNameWithoutExtension(FilePath);
+
+            string FileName = System.IO.Path.GetFileNameWithoutExtension(FilePath);
 
 
             using (var reader = new PdfReader(FilePath))
             {
                 int numPages = reader.NumberOfPages;
- 
+
                 for (int pageNum = 1; pageNum <= numPages; pageNum++)
                 {
                     var strategy = new MyImageRenderListener(SaveFilePath, FileName, pageNum);
@@ -45,10 +45,7 @@ namespace PdfExtractImages.Services
         private readonly int PageNum;
         private string FileName { get; set; }
         private int ImageNum;
-        private bool imageSaved = false;
-        public Action<MemoryStream, string, string, int> UploadImgAction { get; set; } = null!; // 上传图片的委托
-
-        public MyImageRenderListener(string SaveFilePath_,string FileName_, int PageNum_)
+        public MyImageRenderListener(string SaveFilePath_, string FileName_, int PageNum_)
         {
             SaveFilePath = SaveFilePath_;
             PageNum = PageNum_;
@@ -58,7 +55,6 @@ namespace PdfExtractImages.Services
         public async void RenderImage(ImageRenderInfo renderInfo)
         {
             ImageNum++;
-            //if (imageSaved) return; // 只取第一个
             try
             {
                 var imageObj = renderInfo.GetImage();
@@ -69,24 +65,22 @@ namespace PdfExtractImages.Services
                 using var ms = new MemoryStream(imgBytes);
                 try
                 {
-                    using var img =SixLabors.ImageSharp.Image.Load(ms); // ImageSharp 会抛异常
+                    using var img = SixLabors.ImageSharp.Image.Load(ms); // ImageSharp 会抛异常
                     ms.Position = 0;
                     string ImageName = $"{FileName}_{PageNum}_{ImageNum}.png";
 
                     string imgPath = System.IO.Path.Combine(SaveFilePath, ImageName);
 
                     img.Save(imgPath);
-
-                    imageSaved = true;
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"图片无效或格式不支持，页码 {PageNum}: {ex.Message}");
+                    throw;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"提取图片失败: {ex.Message}");
+                throw;
             }
         }
 
